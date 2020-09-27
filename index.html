@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <title>Charles Pedro</title>
+  <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css'>
+    
+  <link rel="stylesheet" href="style.css">    
+
+</head>
+<body>
+<div class='header section'>
+  <div class='container'>
+    <h1>Charles Pedro, Technical Data Analyst</h1>
+    <p>This is a portfolio that highlights some work I've done. It's gonna be amazing.	</p>
+
+     
+  </div>
+</div>
+   
+<div class='main section'>
+  <div class='container'>
+
+	<h2>Skills Section</h2>
+
+	<h2>SQL</h2>
+	
+	<p>Putting this query here just to fill the space. I'll come back to it. <br>
+	<br>
+	
+	select count(*) cnt from
+(select  
+m.year_month,
+m.home_type,
+m.DIVISION,     
+m.region,
+m.CUSTOMER_TYPE,
+zm.city,
+zm.city_code, 
+case when m.demographic_segment_one in (1, 2, 3) then 1 else 0 end as demo_one, 
+case when m.demographic_segment_two is null then 0 else 1 end as demo_two,
+     count(distinct M.HOUSE_ID) as homes,
+     count(distinct R.CUSTOMER_ACCOUNT_ID ) as city_subs,
+     sum(video) as video,
+     sum(internet) as internet,
+     sum(phone) as phone,
+     sum(home_security) as home_security,
+     sum(mobile) as mobile,
+     sum(mobile_num_of_lines) as mobile_num_of_lines,
+     sum(cable) as cable,
+     sum(PREMIUM_HBO ) as HBO,  
+     sum(PREMIUM_SHOWTIME) as SHOWTIME,
+     sum(FLEX_IND) as FLEX_IND
+from 
+	(select 
+	to_char(month_end_dt, 'YYYY-MM') as year_month,
+	home_type,
+	DIVISION,     
+	region,
+	CUSTOMER_TYPE,
+	demographic_segment_one,
+	demographic_segment_two,
+	HOUSE_ID,
+	zip
+	from our_data_warehouse.big_table_one
+	where year_month like '2018%' or year_month like '2019%' or year_month like '2020%') M 
+left join 
+(select 
+	to_char(month_end_dt, 'YYYY-MM') as year_month,
+	house_id,
+     CUSTOMER_ACCOUNT_ID,
+     video,
+     internet,
+     phone,
+     home_security,
+     mobile,
+     mobile_num_of_lines,
+     cable,
+     PREMIUM_HBO,  
+     PREMIUM_SHOWTIME,
+     FLEX_IND
+from our_data_warehouse.big_table_two
+where ACCOUNT_STATUS = 'ACT' and COURTESY_IND = 0 and
+(year_month like '2018%' or year_month like '2019%' or year_month like '2020%')
+) R          
+on R.HOUSE_ID = M.HOUSE_ID  
+and r.year_month = m.year_month
+left join temp.ZIPTOcity  ZM 
+ON M.ZIP = ZM.ZIP_CD
+group by 1, 2, 3, 4, 5, 6, 7, 8, 9) x; </p>
+
+
+	
+	<h2>Python - getting data from a data warehouse</h2>	
+	
+	<h2>AWS - interacting with S3 using Python and boto3</h2>		
+	
+	<h2>Data Visualization</h2>
+
+	<p>These are various visualizations creating using R, High Charts, Google Charts, and Tableau. The topics include health, education, economy, demographics, and other social indicators.</p>
+
+	<p><a href="http://charlespedro.github.io/data-viz-1-final/">Data Visualization Final Project</a></p>      
+	
+	<p>Created with JavaScript and D3, this project explores US imports and exports by comparing the trade of goods and services.</p>	
+	<p><a href="http://charlespedro.github.io/data-viz-2-final/">Advanced Data Visualization Final Project</a></p>      	
+
+	
+	<h2>Python and web development project using World Bank API and development indicators</h2>
+	
+	<p>How effective is aid? Much has been written about the economic failures of Latin America in the 1970s and in Africa throughout the 1980s and 90s. Despite massive amounts of aid, many countries failed to achieve economic growth or quality of life improvements.</p>
+
+	<p>This project tries to measure the effectiveness of aid by looking at how much countries have received compared to a few development indicators.</p>	
+	
+	<p><a href="http://damp-waters-3821.herokuapp.com/">The Effectiveness of Foreign Aid</a></p>      		
+	
+	
+  </div>
+</div>    
+   
+    
+</body>
+</html> 
