@@ -28,67 +28,7 @@
 	
 	<p>Putting this query here just to fill the space. I'll come back to it. <br>
 	<br>
-	
-	select count(*) cnt from
-(select  
-m.year_month,
-m.home_type,
-m.DIVISION,     
-m.region,
-m.CUSTOMER_TYPE,
-zm.city,
-zm.city_code, 
-case when m.demographic_segment_one in (1, 2, 3) then 1 else 0 end as demo_one, 
-case when m.demographic_segment_two is null then 0 else 1 end as demo_two,
-     count(distinct M.HOUSE_ID) as homes,
-     count(distinct R.CUSTOMER_ACCOUNT_ID ) as city_subs,
-     sum(video) as video,
-     sum(internet) as internet,
-     sum(phone) as phone,
-     sum(home_security) as home_security,
-     sum(mobile) as mobile,
-     sum(mobile_num_of_lines) as mobile_num_of_lines,
-     sum(cable) as cable,
-     sum(PREMIUM_HBO ) as HBO,  
-     sum(PREMIUM_SHOWTIME) as SHOWTIME,
-     sum(FLEX_IND) as FLEX_IND
-from 
-	(select 
-	to_char(month_end_dt, 'YYYY-MM') as year_month,
-	home_type,
-	DIVISION,     
-	region,
-	CUSTOMER_TYPE,
-	demographic_segment_one,
-	demographic_segment_two,
-	HOUSE_ID,
-	zip
-	from our_data_warehouse.big_table_one
-	where year_month like '2018%' or year_month like '2019%' or year_month like '2020%') M 
-left join 
-(select 
-	to_char(month_end_dt, 'YYYY-MM') as year_month,
-	house_id,
-     CUSTOMER_ACCOUNT_ID,
-     video,
-     internet,
-     phone,
-     home_security,
-     mobile,
-     mobile_num_of_lines,
-     cable,
-     PREMIUM_HBO,  
-     PREMIUM_SHOWTIME,
-     FLEX_IND
-from our_data_warehouse.big_table_two
-where ACCOUNT_STATUS = 'ACT' and COURTESY_IND = 0 and
-(year_month like '2018%' or year_month like '2019%' or year_month like '2020%')
-) R          
-on R.HOUSE_ID = M.HOUSE_ID  
-and r.year_month = m.year_month
-left join temp.ZIPTOcity  ZM 
-ON M.ZIP = ZM.ZIP_CD
-group by 1, 2, 3, 4, 5, 6, 7, 8, 9) x; </p>
+	</p>
 
 
 	
